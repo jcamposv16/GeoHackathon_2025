@@ -1,0 +1,13 @@
+# Vector database and PDF cache (stored outside the repo)
+C:/Users/jcamp/GeoHackathon_vector_db/
+C:/Users/jcamp/GeoHackathon_pdf_cache/
+
+# Python
+__pycache__/
+*.pyc
+
+# Environment variables
+.env
+
+# BM25 cache
+*.pkl
