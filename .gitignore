@@ -1,6 +1,9 @@
-# Vector database and PDF cache (stored outside the repo)
+# Vector database and PDF cache (may be outside the repo, or default to
+# a project-local folder when VECTOR_DB_DIR / PDF_CACHE_DIR are unset)
 C:/Users/jcamp/GeoHackathon_vector_db/
 C:/Users/jcamp/GeoHackathon_pdf_cache/
+/GeoHackathon_vector_db/
+/GeoHackathon_pdf_cache/
 
 # Python
 __pycache__/

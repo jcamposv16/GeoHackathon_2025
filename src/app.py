@@ -47,7 +47,7 @@ load_dotenv()
 
 BASE_DIR      = Path(__file__).parent.parent
 PDF_DIR       = BASE_DIR / "GeoHackathon_2025" / "Wells"
-DB_DIR        = Path("C:/Users/jcamp/GeoHackathon_vector_db")
+DB_DIR        = Path(os.getenv("VECTOR_DB_DIR", BASE_DIR / "GeoHackathon_vector_db"))
 
 LLM_NAME      = os.getenv("LLM_NAME", "llama3.2")
 EMBED_MODEL   = os.getenv("MODEL_EMBED", "sentence-transformers/all-MiniLM-L6-v2")

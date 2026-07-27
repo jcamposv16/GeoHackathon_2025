@@ -3,6 +3,7 @@
 # Loads PDFs, enriches metadata, builds Chroma vectorstore
 # ============================================================
 
+import os
 import re
 import shutil
 import pickle
@@ -16,7 +17,8 @@ from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_community.vectorstores import Chroma
 from src.well_mapping import WELL_MAPPING
 
-CACHE_DIR = Path("C:/Users/jcamp/GeoHackathon_pdf_cache")
+BASE_DIR = Path(__file__).parent.parent
+CACHE_DIR = Path(os.getenv("PDF_CACHE_DIR", BASE_DIR / "GeoHackathon_pdf_cache"))
 
 
 # ============================================================
