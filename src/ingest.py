@@ -249,11 +249,15 @@ def _well_ids_for_folder(folder: str, text_ids: list[str]) -> str:
 # LOAD ALL PDFs (parallel)
 # ============================================================
 
-def _get_cache_path(pdf_path: Path) -> Path:
-    """Generate a unique cache file path based on PDF filename and modification time."""
+def _content_hash(pdf_path: Path) -> str:
+    """MD5 hash of the PDF's raw bytes, used as a content-addressed cache key."""
+    return hashlib.md5(pdf_path.read_bytes()).hexdigest()
+
+
+def _get_cache_path(pdf_path: Path, content_hash: str) -> Path:
+    """Generate a unique cache file path based on PDF filename and content hash."""
     CACHE_DIR.mkdir(parents=True, exist_ok=True)
-    mtime = pdf_path.stat().st_mtime
-    key = f"{pdf_path.stem}_{mtime}"
+    key = f"{pdf_path.stem}_{content_hash}"
     hash_key = hashlib.md5(key.encode()).hexdigest()
     return CACHE_DIR / f"{hash_key}.pkl"
 
@@ -268,14 +272,18 @@ def load_pdf_docs(pdf_dir: Path) -> list[Document]:
         print(f"No PDFs found in {pdf_dir}")
         return []
 
-    cache_hits = sum(1 for p in pdf_paths if _get_cache_path(p).exists())
+    # Hash each PDF's content once per run; reused for the cache-hit count
+    # below and for the actual cache lookup/write inside convert().
+    cache_paths = {p: _get_cache_path(p, _content_hash(p)) for p in pdf_paths}
+
+    cache_hits = sum(1 for p in pdf_paths if cache_paths[p].exists())
     print(f"Found {len(pdf_paths)} PDFs — "
           f"{cache_hits} cached, "
           f"{len(pdf_paths) - cache_hits} to convert...")
 
     def convert(path: Path) -> Document | None:
         # Check cache first
-        cache_path = _get_cache_path(path)
+        cache_path = cache_paths[path]
         if cache_path.exists():
             try:
                 with open(cache_path, "rb") as f:
