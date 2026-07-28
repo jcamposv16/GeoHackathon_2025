@@ -18,7 +18,7 @@ from langchain_community.vectorstores import Chroma
 from src.well_mapping import WELL_MAPPING
 
 BASE_DIR = Path(__file__).parent.parent
-CACHE_DIR = Path(os.getenv("PDF_CACHE_DIR", BASE_DIR / "GeoHackathon_pdf_cache"))
+CACHE_DIR = Path(os.getenv("PDF_CACHE_DIR", BASE_DIR / "pdf_cache"))
 
 
 # ============================================================

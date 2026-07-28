@@ -2,8 +2,8 @@
 # a project-local folder when VECTOR_DB_DIR / PDF_CACHE_DIR are unset)
 C:/Users/jcamp/GeoHackathon_vector_db/
 C:/Users/jcamp/GeoHackathon_pdf_cache/
-/GeoHackathon_vector_db/
-/GeoHackathon_pdf_cache/
+/vector_db/
+/pdf_cache/
 
 # Python
 __pycache__/

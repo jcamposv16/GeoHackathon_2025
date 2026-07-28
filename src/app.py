@@ -12,6 +12,11 @@ import tempfile
 from pathlib import Path
 from dotenv import load_dotenv
 
+# Must run before any src.* import: ingest.py reads PDF_CACHE_DIR
+# at module import time, so .env has to be loaded first or that
+# read silently falls back to the default path.
+load_dotenv()
+
 sys.stdout.reconfigure(encoding="utf-8")
 import gradio as gr
 
@@ -43,11 +48,10 @@ from src.production_analysis import (
 # ============================================================
 # CONFIGURATION
 # ============================================================
-load_dotenv()
 
 BASE_DIR      = Path(__file__).parent.parent
 PDF_DIR       = BASE_DIR / "GeoHackathon_2025" / "Wells"
-DB_DIR        = Path(os.getenv("VECTOR_DB_DIR", BASE_DIR / "GeoHackathon_vector_db"))
+DB_DIR        = Path(os.getenv("VECTOR_DB_DIR", BASE_DIR / "vector_db"))
 
 LLM_NAME      = os.getenv("LLM_NAME", "llama3.2")
 EMBED_MODEL   = os.getenv("MODEL_EMBED", "sentence-transformers/all-MiniLM-L6-v2")
