@@ -429,33 +429,12 @@ def handle_chat(message: str, history: list, request: gr.Request = None):
 
 
 # ============================================================
-# PDF UPLOAD HANDLER
-# ============================================================
-def handle_pdf_upload(file) -> str:
-    if file is None:
-        return "No file selected."
-    try:
-        import shutil
-        global vectorstore, summary_chain, qa_chain, agent
-        dest = PDF_DIR / Path(file.name).name
-        shutil.copy(file.name, dest)
-        new_docs      = load_pdf_docs(PDF_DIR)
-        vectorstore   = build_vectorstore(new_docs, DB_DIR, EMBED_MODEL, recreate=True)
-        summary_chain = build_summary_chain(llm, vectorstore)
-        qa_chain      = build_qa_chain(llm, vectorstore, k=TOP_K)
-        agent         = build_agent(llm, vectorstore, k=TOP_K, verbose=False)
-        return f"Indexed: {dest.name}. Vectorstore rebuilt with {len(new_docs)} documents."
-    except Exception as e:
-        return f"Upload error: {e}"
-
-
-# ============================================================
 # GRADIO UI
 # ============================================================
 with gr.Blocks(title="SPE GeoHackathon 2025 — Well Report AI") as demo:
 
     gr.Markdown("""
-    # SPE GeoHackathon 2025 — Well Report AI Assistant
+    # Well Report AI Assistant
     Ask anything about the well completion reports. Summaries, parameters, and nodal analysis are handled automatically.
     """)
 
@@ -489,13 +468,6 @@ with gr.Blocks(title="SPE GeoHackathon 2025 — Well Report AI") as demo:
         ],
         inputs=msg_input,
     )
-
-    with gr.Accordion("Upload additional well report PDFs", open=False):
-        gr.Markdown("Upload a PDF to add it to the knowledge base. The vectorstore will be rebuilt automatically.")
-        uploader   = gr.File(label="Select PDF", file_types=[".pdf"])
-        upload_btn = gr.Button("Ingest PDF")
-        upload_out = gr.Textbox(label="Status", lines=2)
-        upload_btn.click(handle_pdf_upload, uploader, upload_out)
 
     send_btn.click(handle_chat,
         [msg_input, chatbot],
