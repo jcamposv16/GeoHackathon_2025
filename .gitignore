@@ -14,3 +14,6 @@ __pycache__/
 
 # BM25 cache
 *.pkl
+
+# Claude Code local tooling config
+.claude/
