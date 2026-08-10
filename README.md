@@ -6,6 +6,12 @@
 ![Gradio](https://img.shields.io/badge/UI-Gradio-F97316?logo=gradio&logoColor=white)
 ![Offline](https://img.shields.io/badge/Runs-100%25%20Offline-2E8B57)
 
+## 🚀 Live Demo
+
+Try the app directly — no installation required:
+
+**[▶ Open Well Report AI Agent on Hugging Face Spaces](https://huggingface.co/spaces/jcamposv16/well-report-agent)**
+
 A RAG-powered agentic AI system that answers engineering questions from 13 geothermal well completion reports, running fully offline. Built for the **SPE GeoHackathon 2025** challenge.
 
 No cloud. No API costs. Full data privacy — every model, every document, and every byte of inference stays on your machine.
