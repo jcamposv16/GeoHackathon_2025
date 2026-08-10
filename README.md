@@ -28,6 +28,20 @@ Each question is classified into one of five intent types:
 
 Every response is post-processed regardless of intent: answers are cleaned, irrelevant sources are filtered out, and empty coordinate blocks are suppressed.
 
+## Screenshots
+
+### Knowledge Base & The Challenge
+![Knowledge Base](docs/images/slide1-knowledge-base.jpg)
+
+### System Architecture
+![System Architecture](docs/images/slide2-architecture.jpg)
+
+### AI Agent in Action — Well Summaries & Q&A
+![Well Summaries](docs/images/slide3-demo-qa.jpg)
+
+### AI Agent in Action — Production & Nodal Analysis
+![Production and Nodal](docs/images/slide4-demo-production.jpg)
+
 ## Architecture
 
 ```mermaid
